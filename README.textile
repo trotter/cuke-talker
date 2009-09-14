@@ -1,0 +1,13 @@
+h1. CukeTalker
+
+CukeTalker is a REPL (read eval print loop) for Cucumber that allows you to
+interactively write your features. It has a "show history" command that will
+inform you of the commands you've entered and allows you to define new steps on
+the fly. In practive, we've found that CukeTalker greatly reduces the amount of
+time needed to write features.
+
+h1. Caveats
+
+CukeTalker is *very* alpha right now. It is known to work with webrat driving
+selenium. It *may* work with other setups, but it has not be tested.
+
