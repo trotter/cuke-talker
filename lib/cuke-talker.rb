@@ -3,19 +3,20 @@ require 'rubygems'
 require 'cucumber'
 
 class CukeTalker
-  def self.start_repl
-    new.run_repl
+  def self.start_repl(features_dir)
+    new(features_dir).run_repl
   end
 
-  def initialize
+  def initialize(features_dir)
+    @features_dir = features_dir
     @step_mother = Cucumber::StepMother.new
     @out = StringIO.new
     @err = StringIO.new
     configuration = Cucumber::Cli::Configuration.new(@out, @err)
     configuration.parse!([])
     @step_mother.options = configuration.options
-    @step_mother.load_code_files(Dir["features/support/*.rb"])
-    @step_mother.load_code_files(Dir["features/step_definitions/*.rb"])
+    @step_mother.load_code_files(Dir["#{@features_dir}/support/*.rb"])
+    @step_mother.load_code_files(Dir["#{@features_dir}/step_definitions/*.rb"])
     @visitor = configuration.build_formatter_broadcaster(@step_mother)
     @step_mother.visitor = @visitor
     @steps = []
@@ -25,7 +26,11 @@ class CukeTalker
   def run_repl
     print ">> "
     while !@stop && (line = gets)
-      run line.chomp
+      begin
+        run line.chomp
+      rescue => e
+        puts "You had an error: #{e}"
+      end
       print ">> "
     end
     puts
@@ -119,6 +124,6 @@ class CukeTalker
 end
 
 if $0 == __FILE__
-  CukeTalker.start_repl
+  CukeTalker.start_repl "example_features"
 end
 

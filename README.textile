@@ -11,3 +11,6 @@ h1. Caveats
 CukeTalker is *very* alpha right now. It is known to work with webrat driving
 selenium. It *may* work with other setups, but it has not be tested.
 
+h1. Requires
+
+  The 'selenium-client' gem
