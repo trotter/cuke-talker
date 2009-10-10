@@ -124,6 +124,7 @@ class CukeTalker
 end
 
 if $0 == __FILE__
-  CukeTalker.start_repl "example_features"
+  features_folder = ARGV.shift
+  CukeTalker.start_repl features_folder
 end
 
