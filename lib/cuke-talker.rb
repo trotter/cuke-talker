@@ -57,6 +57,12 @@ class CukeTalker
     File.delete(path)
   end
 
+  def process_feature(feature)
+    feature.gsub!(/^.*? /, '')
+    features = @step_mother.load_plain_text_features(["#{@features_dir}/#{feature}.feature"])
+    @visitor.visit_features(features)
+  end
+
   def process_ruby(ruby)
     eval ruby[1..-1]
   end
@@ -108,6 +114,8 @@ class CukeTalker
       :ruby
     when /define step/
       :define_step
+    when /feature/
+      :feature
     else
       :other
     end
