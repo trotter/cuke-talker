@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'cucumber'
+require 'readline'
 
 class CukeTalker
   def self.start_repl(features_dir)
@@ -24,14 +25,12 @@ class CukeTalker
   end
 
   def run_repl
-    print ">> "
-    while !@stop && (line = gets)
+    while !@stop && (line = Readline.readline('>> ', true))
       begin
         run line.chomp
       rescue => e
         puts "You had an error: #{e}"
       end
-      print ">> "
     end
     puts
   end
@@ -70,13 +69,11 @@ class CukeTalker
   def process_define_step(_)
     stop = false
     step_definition = ""
-    print "$$ "
-    while !stop && (line = gets)
+    while !stop && (line = Readline.readline('$$ ', true))
       if line.chomp =~ /^ *done *$/i
         stop = true
       else
         step_definition << line
-        print "$$ "
       end
     end
     add_step_definition(step_definition)
